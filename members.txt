@@ -1,0 +1,12 @@
+First Milestone
+--------------------------------------------------------------------------
+Team Members: Timmy Huang, Bill Xiong, Torrance Yang, Yumin Zhang
+
+--------------------------------------------------------------------------
+Timmy: He worked on getting the data to populate our database. Specifically he worked on getting multiple movie site’s data about movies and using twitter and reddit’s api to get user comments and process those comments to count the number of relevant comments.
+
+Bill: He worked the database design. He created the E/R diagram and all the tables and keys. He also worked on planning the web interface. 
+
+Torrance: He worked on creating the sample database. He created and tested the databases with constraints. He also creates the function to allow user to have their own queries to get the information from the database. 
+
+Yumin: She worked on the web application’s design. She researched on what’s currently available and the sources which we could use to build our web application. She also worked on building up a basic web interface and connect it will the database.  
