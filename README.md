@@ -1,6 +1,10 @@
-# python-getting-started
+# Movie Suggestions
 
-A barebones Python app, which can easily be deployed to Heroku.
+A barebones Python app that queries a database, and suggests movies for you to watch based on the parameters you give it. Made for Duke COMPSCI 316 - Databases (2017)
+
+Here's how to set it up and deploy to Heroku.
+
+Site is viewable at http://movie-suggestion-316.herokuapp.com
 
 This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
 
