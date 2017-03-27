@@ -34,11 +34,12 @@ def insert_into_movies_and_directors(top250):
         director_name = director["name"].split()
         first_name = director_name[0]
         last_name = ' '.join(director_name[1:]).strip()
+        release_date = datetime(1980, 1, 1, tzinfo=None)
         try:
             release_date = datetime.strptime(requests.get('http://www.omdbapi.com/?i=tt' + movie_id).json()['Released'], '%d %b %Y')
         except Exception as e:
-            release_date = datetime.min()
-        print(move)
+            print("Datetime not valid")
+        print(movie)
         cursor.execute('INSERT INTO Director VALUES (%s, %s, %s) ON CONFLICT DO NOTHING', (director.getID(), first_name, last_name))
         cursor.execute('INSERT INTO Movie VALUES(%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING', (movie_id, movie['title'], movie['genre'][0], director.getID(), release_date))
 
