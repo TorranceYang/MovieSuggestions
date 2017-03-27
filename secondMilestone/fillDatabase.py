@@ -26,7 +26,6 @@ def scrape_top250():
 
 #Queries imdbpy package for more movie information
 def insert_into_movies_and_directors(top250):
-    result = []
     ia = IMDb()
     for movie_id in top250:
         movie = ia.get_movie(movie_id)
@@ -43,11 +42,35 @@ def insert_into_movies_and_directors(top250):
         cursor.execute('INSERT INTO Director VALUES (%s, %s, %s) ON CONFLICT DO NOTHING', (director.getID(), first_name, last_name))
         cursor.execute('INSERT INTO Movie VALUES(%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING', (movie_id, movie['title'], movie['genre'][0], director.getID(), release_date))
 
+#Inserts ratings into database
+def insert_ratings(top250):
+    ia = IMDb()
+    for movie_id in top250:
+        movie = ia.get_movie(movie_id)['title']
+
+        #Rotten Tomatoes does not have an api, so this is how we're scraping for these movie ratings
+        search = requests.get('https://www.google.com/search?q=' + movie.replace(" ", "+") + '+rating')
+        text = search.text
+        for s in list(re.finditer('https://www.rottentomatoes.com', text)):
+            temptext = text[:s.start()]
+            index = temptext.rfind('<span') - 1
+            rotten_rating = ''
+            if search.text[index-3:index] == '100':
+                rotten_rating = '100'
+            else:
+                rotten_rating = search.text[index-2:index]
+            if rotten_rating.isdigit():
+                break
+
+        cursor.execute("INSERT INTO RATING VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Rotten Tomatoes", movie_id, 100, float(rotten_rating)))
+
+
 def main():
     print(open("createTables.sql", "r").read())
     cursor.execute(open("createTables.sql", "r").read())
     top250 = scrape_top250()
-    insert_into_movies_and_directors(top250)
+    #insert_into_movies_and_directors(top250)
+    insert_ratings(top250)
 
 url = urlparse(os.environ["DATABASE_URL"])
 conn = psycopg2.connect(
