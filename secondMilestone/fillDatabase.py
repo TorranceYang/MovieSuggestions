@@ -10,7 +10,7 @@ from datetime import datetime
 top250_url = "http://akas.imdb.com/chart/top"
 
 
-#Gets the IMDB Movie ID"s of the top 250 rate movies
+#Gets the IMDB Movie ID"s of the top 250 rate movies, snippet was taken from Stack Overflow
 def scrape_top250():
     r = requests.get(top250_url)
     html = r.text.split("\n")
@@ -61,12 +61,22 @@ def insert_ratings(top250):
                 rotten_rating = search.text[index-2:index]
             if rotten_rating.isdigit():
                 break
+            rotten_rating = 0
+        #Get IMDb rating + Metascore from IMDb
+        imdb_info = requests.get('http://www.omdbapi.com/?i=tt' + movie_id).json()
+        imdb_rating = imdb_info['imdbRating']
 
-        cursor.execute("INSERT INTO RATING VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Rotten Tomatoes", movie_id, 100, float(rotten_rating)))
+        if not imdb_info['Metascore'].isdigit():
+            metascore_rating = 0
+        else:
+            metascore_rating = imdb_info['Metascore']
 
+        print movie, rotten_rating, imdb_rating, metascore_rating
+        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Rotten Tomatoes", movie_id, 100, float(rotten_rating)))
+        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("IMDb", movie_id, 10, imdb_rating))
+        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Metascore", movie_id, 100, metascore_rating))
 
 def main():
-    print(open("createTables.sql", "r").read())
     cursor.execute(open("createTables.sql", "r").read())
     top250 = scrape_top250()
     #insert_into_movies_and_directors(top250)
