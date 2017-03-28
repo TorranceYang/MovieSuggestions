@@ -1,0 +1,12 @@
+Second Milestone
+--------------------------------------------------------------------------
+Team Members: Timmy Huang, Bill Xiong, Torrance Yang, Yumin Zhang
+
+--------------------------------------------------------------------------
+Timmy: He worked on getting the data to populate our database. In our source code, Timmy wrote the python code using reddit api to get the data of user comments and generate queries to the database. 
+
+Bill: He worked on connecting the front end of the web with the back end python code and generating the python queries to get the corresponding data and pass back to front end. 
+
+Torrance: He set up the web on heroku and worked on scraping the data from imdb to fill out the database. 
+
+Yumin: She worked on the web application’s design. She did the quieries design and created user functions on the web.. 
