@@ -13,5 +13,15 @@ conn = psycopg2.connect(
     port=url.port
 )
 
+def query():
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM director")
+        row = cursor.fetchall()
+    return row
+
+
+
 def test():
     print("hi")
+
+
