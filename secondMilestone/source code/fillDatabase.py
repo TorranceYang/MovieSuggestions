@@ -66,20 +66,20 @@ def insert_ratings(top250):
         imdb_info = requests.get('http://www.omdbapi.com/?i=tt' + movie_id).json()
         imdb_rating = imdb_info['imdbRating']
 
-        if not imdb_info['Metascore'].isdigit():
-            metascore_rating = 0
-        else:
+        if imdb_info['Metascore'].isdigit():
             metascore_rating = imdb_info['Metascore']
+            cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Metascore", movie_id, 100, metascore_rating))
 
         print movie, rotten_rating, imdb_rating, metascore_rating
-        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Rotten Tomatoes", movie_id, 100, float(rotten_rating)))
-        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("IMDb", movie_id, 10, imdb_rating))
-        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s)", ("Metascore", movie_id, 100, metascore_rating))
+        if rotten_rating > 0:
+            cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s) ON CONFLICT DO NOTHING", ("Rotten Tomatoes", movie_id, 100, float(rotten_rating)))
+        cursor.execute("INSERT INTO Rating VALUES (uuid_generate_v4(), %s, %s, %s, %s) ON CONFLICT DO NOTHING", ("IMDb", movie_id, 10, imdb_rating))
+
 
 def main():
     cursor.execute(open("createTables.sql", "r").read())
     top250 = scrape_top250()
-    #insert_into_movies_and_directors(top250)
+    insert_into_movies_and_directors(top250)
     insert_ratings(top250)
 
 url = urlparse(os.environ["DATABASE_URL"])
