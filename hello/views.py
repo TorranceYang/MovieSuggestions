@@ -17,6 +17,6 @@ def db(request):
     # greeting = Greeting()
     # greeting.save()
 
-    # greetings = Greeting.objects.all()
+    # greetings = Greet ing.objects.all()
 
     return render(request, 'index.html', {'directors': row, 'test': 'wat are those'})
