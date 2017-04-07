@@ -19,9 +19,5 @@ def query():
         row = cursor.fetchall()
     return row
 
-
-
 def test():
     print("hi")
-
-
