@@ -30,3 +30,16 @@ CREATE TABLE IF NOT EXISTS GrossingInfo
   date_timestamp TIMESTAMP NOT NULL,
   amount_grossed FLOAT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Actor
+(
+  id INTEGER NULL PRIMARY KEY,
+  first_name VARCHAR(256) NOT NULL,
+  last_name VARCHAR NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS StarredIn
+(
+  actor_id INTEGER NOT NULL REFERENCES Actor(id),
+  movie_id INTEGER NOT NULL REFERENCES Movie(id)
+);
