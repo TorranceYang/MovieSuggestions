@@ -13,10 +13,10 @@ def index(request):
 
 def db(request):
 
-    row = moviesdb.query();
+    movies = moviesdb.getAllMovies();
     # greeting = Greeting()
     # greeting.save()
 
     # greetings = Greet ing.objects.all()
 
-    return render(request, 'index.html', {'directors': row, 'test': 'wat are those'})
+    return render(request, 'index.html', {'movies': movies, 'test': 'wat are those'})
