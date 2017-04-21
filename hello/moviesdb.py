@@ -19,24 +19,25 @@ def getAllMovies():
     cursor = conn.cursor()
     cursor.execute("""
     SELECT
-      title, genre, plot, date_released, director.first_name, director.last_name, string_agg(rating_score::text, ',') AS ratings, string_agg(max_rating::text, ',') as max_ratings, string_agg(source_name, ',') as sources, amount_grossed
+     Movie.id, title, genre, plot, date_released, Director.first_name, Director.last_name, string_agg(rating_score::text, ',') AS ratings, string_agg(max_rating::text, ',') as max_ratings, string_agg(source_name, ',') as sources, amount_grossed
     FROM
       Movie, Director, Rating, GrossingInfo
     WHERE
       Movie.director = Director.id AND Rating.movie_id = Movie.id AND GrossingInfo.movie_id = Movie.id
     GROUP BY
-      1, 2, 3, 4, 5, 6, 10
+      1, 2, 3, 4, 5, 6, 7, 11
     """)
 
     all_rows = cursor.fetchall()
 
     movies = []
     for row in all_rows:
-        movies.append(Movie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
+        movies.append(Movie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]))
     return movies
 
 class Movie:
-    def __init__(self, title, genre, plot, date_released, director_fname, director_lname, ratings, max_ratings, sources, grossed):
+    def __init__(self, movie_id, title, genre, plot, date_released, director_fname, director_lname, ratings, max_ratings, sources, grossed):
+        self.poster_path = "../static/posters/" + str(movie_id).zfill(7) + ".jpg"
         self.title = title
         self.genre = genre
         self.plot = plot

@@ -11,12 +11,19 @@
     <h1>Find the Movie You've Been Looking For</h1>
     <p>Overwhelmed by all of the options out there? Look no farther, we provide you with all the tools to find the perfect movie!</p>
     <a type="button" class="btn btn-lg btn-default" href="https://github.com/yuminz/316Spring2017"><span class="fa fa-github"></span> View Source</a>
-    <button type="submit">query here</button>
-
-    <!-- <h1>List of all directors</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="panel-group">
     {% for movie in movies %}
-        <li>{{ movie.metascore }}</li>
-    {% endfor %} -->
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ movie.title }}</div>
+      <div class="panel-body">
+        <img src={{movie.poster_path}}/>
+
+      </div>
+    </div>
+    {% endfor %}
   </div>
 </div>
 
