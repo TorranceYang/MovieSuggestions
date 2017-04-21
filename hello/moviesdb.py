@@ -1,12 +1,10 @@
 import os
 import psycopg2
 import urlparse
+import datetime
 
 urlparse.uses_netloc.append("postgres")
 url = urlparse.urlparse(os.environ["DATABASE_URL"])
-
-
-
 conn = psycopg2.connect(
     database=url.path[1:],
     user=url.username,
@@ -44,7 +42,7 @@ class Movie:
         self.date_released = date_released
         self.director_fname = director_fname
         self.director_lname = director_lname
-        self.grossed = grossed
+        self.grossed = "%.2f" % grossed
 
         ratings_array = ratings.split(",")
         ##This can just be a constant, but this is just a meaningless proof of concept so it doesn't really matter

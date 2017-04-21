@@ -9,7 +9,7 @@
       <img src="{% static 'popcorn.png'%}">
     </a>
     <h1>Find the Movie You've Been Looking For</h1>
-    <p>Overwhelmed by all of the options out there? Look no farther, we provide you with all the tools to find the perfect movie!</p>
+    <p>Overwhelmed by all of the options out there? We've placed all the information about IMDb's Top 250 movies all in one place so that you can make the decision quicker!</p>
     <a type="button" class="btn btn-lg btn-default" href="https://github.com/yuminz/316Spring2017"><span class="fa fa-github"></span> View Source</a>
   </div>
 </div>
@@ -17,10 +17,36 @@
   <div class="panel-group">
     {% for movie in movies %}
     <div class="panel panel-default">
-      <div class="panel-heading">{{ movie.title }}</div>
+      <div class="panel-heading">{{ movie.title }} ({{ movie.date_released.year }})</div>
       <div class="panel-body">
-        <img src={{movie.poster_path}}/>
-
+        <div class="row">
+          <div class="col-md-4">
+            <img class ="constrained" src={{movie.poster_path}}/>
+          </div>
+          <div class="col-md-4">
+            <b>Plot:</b> {{ movie.plot }}
+            <br />
+            <br />
+            <b>Genre:</b> {{ movie.genre}}
+            <br />
+            <br />
+            <b>Grossed:</b> ${{movie.grossed}} million
+          </div>
+          <div class="col-md-4 text-center">
+            <!-- <ul class="list-unstyled">
+              <li>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped  " role="progressbar"
+                style="width:40%"></div>
+                  <span class="progress-value">50</span>
+                </div>
+              </li>
+              <li>
+                asdfa
+              </li>
+            </ul> -->
+          </div>
+        </div>
       </div>
     </div>
     {% endfor %}

@@ -8,6 +8,7 @@
   <script src="https://use.fontawesome.com/609d7e8016.js"></script>
   <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
   <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
   <style type="text/css">
     .jumbotron {
         background: #158cba;
@@ -42,10 +43,89 @@
     .jumbotron .lang-logo img {
         max-width: 100%
     }
+    .panel-heading {
+       font-weight: bold;
+       font-size: 26px;
+    }
+    .no-padding {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .center {
+      text-align: center
+    }
+    .popover {
+      margin: auto;
+    }
+    .progress-value {
+      position:absolute;
+      right:0;
+      left:0;
+    }
+    #return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #158CBA;
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  #return-to-top i {
+      color: #fff;
+      margin: 0;
+      position: relative;
+      left: 16px;
+      top: 13px;
+      font-size: 19px;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+  }
+  #return-to-top:hover {
+      background: rgba(0, 0, 0, 0.9);
+  }
+  #return-to-top:hover i {
+      color: #fff;
+      top: 5px;
+  }
+  body {
+    font-size: 17px;
+  }
   </style>
+  <script type="text/javascript">
+  // ===== Scroll to Top ====
+  // https://codepen.io/rdallaire/pen/apoyx
+  $(document).ready(function() {
+    $(window).scroll(function() {
+      if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
+          $('#return-to-top').fadeIn(200);    // Fade in the arrow
+      } else {
+          $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+      }
+    });
+    $('#return-to-top').click(function() {      // When arrow is clicked
+      $('body,html').animate({
+          scrollTop : 0                       // Scroll to top of body
+      }, 500);
+    });
+  });
+  </script>
 </head>
 <body>
-
+<a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
 {% block content %}{% endblock %}
 
 </body>
