@@ -30,21 +30,21 @@
             <b>Genre:</b> {{ movie.genre}}
             <br />
             <br />
-            <b>Grossed:</b> ${{movie.grossed}} million
+            <b>Grossed:</b> ${{movie.grossed}} million (US)
+            <br />
+            <br />
+            <b>Actors:</b>
+            {% for actor in movie.zipped_actors %}
+              <a href={{ actor.1 }} target="_blank">{{ actor.0 }}{{ forloop.last|yesno:",&#44;"|safe }}</a>
+            {% endfor %}
+            <br />
+            <br />
+            <b>Director:</b>
+            <a href={{ movie.director_link }} target="_blank">{{ movie.director_name }}</a>
           </div>
           <div class="col-md-4 text-center">
-            <!-- <ul class="list-unstyled">
-              <li>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped  " role="progressbar"
-                style="width:40%"></div>
-                  <span class="progress-value">50</span>
-                </div>
-              </li>
-              <li>
-                asdfa
-              </li>
-            </ul> -->
+            <h2>Ratings</h2>
+            To be inserted
           </div>
         </div>
       </div>

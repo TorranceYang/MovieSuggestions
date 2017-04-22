@@ -17,36 +17,41 @@ def getAllMovies():
     cursor = conn.cursor()
     cursor.execute("""
     SELECT
-     Movie.id, title, genre, plot, date_released, Director.first_name, Director.last_name, string_agg(rating_score::text, ',') AS ratings, string_agg(max_rating::text, ',') as max_ratings, string_agg(source_name, ',') as sources, amount_grossed
+     Movie.id, title, genre, plot, date_released, Director.id, Director.first_name, Director.last_name, amount_grossed, movies_actors, actor_ids, string_agg(rating_score::text, ',') AS ratings, string_agg(source_name, ',') as sources
     FROM
-      Movie, Director, Rating, GrossingInfo
+      Movie, Director, Rating, GrossingInfo, (SELECT movie_id, string_agg(first_name || ' ' || last_name, ',') as movies_actors, string_agg(actor_id::text, ',') as actor_ids FROM Actor, StarredIn WHERE actor.id = StarredIn.actor_id GROUP BY 1) AS ActorsInMovies
     WHERE
-      Movie.director = Director.id AND Rating.movie_id = Movie.id AND GrossingInfo.movie_id = Movie.id
+      Movie.director = Director.id AND Rating.movie_id = Movie.id AND GrossingInfo.movie_id = Movie.id AND Movie.id = ActorsInMovies.movie_id AND Rating.movie_id = ActorsInMovies.movie_id
     GROUP BY
-      1, 2, 3, 4, 5, 6, 7, 11
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
     """)
 
     all_rows = cursor.fetchall()
 
     movies = []
     for row in all_rows:
-        movies.append(Movie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]))
+        movies.append(Movie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12]))
     return movies
 
+#Have no idea how to do this any better
 class Movie:
-    def __init__(self, movie_id, title, genre, plot, date_released, director_fname, director_lname, ratings, max_ratings, sources, grossed):
+    def __init__(self, movie_id, title, genre, plot, date_released, director_id, director_fname, director_lname, grossed, actors, actor_ids, ratings, sources):
         self.poster_path = "../static/posters/" + str(movie_id).zfill(7) + ".jpg"
         self.title = title
         self.genre = genre
         self.plot = plot
+        self.imdb_link = "https://www.imdb.com/title/tt" + str(movie_id).zfill(7)
         self.date_released = date_released
-        self.director_fname = director_fname
-        self.director_lname = director_lname
+        self.director_id = str(director_id).zfill(7)
+        self.director_name = director_fname + " " + director_lname
+        self.director_link = "http://www.imdb.com/name/nm" + str(director_id).zfill(7)
+        self.actors = actors.split(",")
+        split_ids = actor_ids.split(",")
+        self.actor_ids = ["http://www.imdb.com/name/nm" + str(actor_id).zfill(7) for actor_id in split_ids]
+        self.zipped_actors = zip(self.actors, self.actor_ids)
         self.grossed = "%.2f" % grossed
 
         ratings_array = ratings.split(",")
-        ##This can just be a constant, but this is just a meaningless proof of concept so it doesn't really matter
-        max_ratings_array = max_ratings.split(",")
         sources_array = sources.split(",")
 
         try:
