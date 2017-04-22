@@ -56,17 +56,24 @@ class Movie:
 
         try:
             self.rotten_rating = ratings_array[sources_array.index("Rotten Tomatoes")]
+            self.rotten_rating_text = "width:" + str(self.rotten_rating) + "%"
         except:
             self.rotten_rating = "N/A"
         try:
             self.metascore = ratings_array[sources_array.index("Metascore")]
+            self.metascore_text = "width:" + str(self.metascore) + "%"
         except:
             self.metascore = "N/A"
 
         try:
             self.imdb_rating = ratings_array[sources_array.index("IMDb")]
+            self.imdb_rating_text = "width:" + str(int(float(self.imdb_rating) * 10)) + "%"
         except:
+
             self.imdb_rating = "N/A"
+
+        #Filler
+        self.custom_score = 90
 
         self.rotten_max = 100
         self.metascore_max = 100

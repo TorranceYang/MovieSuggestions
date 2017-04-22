@@ -21,7 +21,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-md-4">
-            <img class ="constrained" src={{movie.poster_path}}/>
+            <img src={{movie.poster_path}}/>
           </div>
           <div class="col-md-4">
             <b>Plot:</b> {{ movie.plot }}
@@ -44,7 +44,39 @@
           </div>
           <div class="col-md-4 text-center">
             <h2>Ratings</h2>
-            To be inserted
+            <button class="btn btn-primary" type="button">
+              Our Rating <span class="badge">{{ movie.custom_score }}</span>
+            </button>
+            <br />
+            <br />
+            <b>IMDb</b>
+            <div class="progress text-center">
+              <div class="progress-bar progress-bar-warning  progress-bar-striped" style={{ movie.imdb_rating_text }}>
+                <span>
+                  {{ movie.imdb_rating }}
+                </span>
+              </div>
+            </div>
+            <br />
+            <br />
+            <b>Rotten Tomatoes</b>
+            <div class="progress text-center">
+              <div class="progress-bar progress-bar-danger progress-bar-striped" style={{ movie.rotten_rating_text }}>
+                <span>
+                  {{ movie.rotten_rating }}
+                </span>
+              </div>
+            </div>
+            <br />
+            <br />
+            <b>Metascore</b>
+            <div class="progress text-center">
+              <div class="progress-bar progress-bar-success progress-bar-striped" style={{ movie.metascore_text }}>
+                <span>
+                  {{ movie.metascore }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
