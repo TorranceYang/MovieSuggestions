@@ -1,19 +1,27 @@
+"""where all the view stuff goes i guess"""
 from django.shortcuts import render
-from django.http import HttpResponse
+#from django.http import HttpResponse
 import moviesdb
+from hello.search import Search
 
-from .models import Greeting
 
 # Create your views here.
 def index(request):
+    """hello world test?"""
     # return HttpResponse('Hello from Python!')
-    moviesdb.test()
     return render(request, 'index.html')
+
+def search_movies(request):
+    """execute search request"""
+    if request.method == "GET":
+        search_results = Search(request.GET.get('searchBar', None), request.GET['categories'])
+        movies = search_results.getSearchResults()
+        return render(request, 'index.html', {'movies': movies})
 
 
 def db(request):
-
-    movies = moviesdb.getAllMovies();
+    """return all movies"""
+    movies = moviesdb.getAllMovies()
     # greeting = Greeting()
     # greeting.save()
 
