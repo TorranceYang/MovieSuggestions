@@ -14,6 +14,7 @@ conn = psycopg2.connect(
 )
 
 def getAllMovies():
+    """return all movies"""
     cursor = conn.cursor()
     cursor.execute("""
     SELECT

@@ -18,14 +18,30 @@
   <div class="panel-group">
       <form action="/search/" method="get" style="margin-bottom: 50px">
           <div style="text-align: center">
-            <input type="text" name="searchBar" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
+            <span>Title</span>
+            <input type="text" name="searchTitle" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
             <input type="submit" name="enter" value="Submit" />
-              <select name="categories" style="display:inline">
-                  <option value="title">Title</option>
-                  <option value="genre">Genre</option>
-                  <option value="director">Director</option>
-                  <option value="rating">Rating</option>
-              </select>
+          </div>
+      </form>
+      <form action="/search/" method="get" style="margin-bottom: 50px">
+          <div style="text-align: center">
+            <span>Genre</span>
+            <input type="text" name="searchGenre" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
+            <input type="submit" name="enter" value="Submit" />
+          </div>
+      </form>
+      <form action="/search/" method="get" style="margin-bottom: 50px">
+          <div style="text-align: center">
+            <span>Director</span>
+            <input type="text" name="searchDirector" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
+            <input type="submit" name="enter" value="Submit" />
+          </div>
+      </form>
+      <form action="/search/" method="get" style="margin-bottom: 50px">
+          <div style="text-align: center">
+            <span>Rating</span>
+            <input type="text" name="searchRating" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
+            <input type="submit" name="enter" value="Submit" />
           </div>
       </form>
     {% for movie in movies %}
