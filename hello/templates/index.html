@@ -82,12 +82,14 @@
   {% for movie in movies %}
   <div class="panel panel-default">
     <div class="panel-heading">
-      {{ movie.title }} ({{ movie.date_released.year }})
+      <a href={{ movie.imdb_link }} target="_blank" style="color: black;">{{ movie.title }} ({{ movie.date_released.year }})</a>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-4">
-          <img src={{movie.poster_path}}/>
+          <a href={{ movie.imdb_link }} target="_blank" style="color: black;">
+            <img src={{movie.poster_path}}/>
+          </a>
         </div>
         <div class="col-md-4">
           <b>Plot:</b> {{ movie.plot }}
