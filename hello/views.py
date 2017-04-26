@@ -3,7 +3,6 @@ from django.shortcuts import render
 #from django.http import HttpResponse
 import hello.moviesdb as moviesdb
 from hello.search import Search
-from hello.search_factory import SearchFactory
 
 
 # Create your views here.
