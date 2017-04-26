@@ -39,6 +39,7 @@ def getAllMovies():
 #Have no idea how to do this any better
 class Movie:
     def __init__(self, movie_id, title, genre, plot, date_released, director_id, director_fname, director_lname, grossed, actors, actor_ids, ratings, sources):
+        self.id = movie_id
         self.poster_path = "../static/posters/" + str(movie_id).zfill(7) + ".jpg"
         self.title = title
         self.genre = genre
@@ -56,7 +57,7 @@ class Movie:
 
         ratings_array = ratings.split(",")
         sources_array = sources.split(",")
-        
+
         score = 0
         num_results = 0
         try:
@@ -89,3 +90,5 @@ class Movie:
         self.rotten_max = 100
         self.metascore_max = 100
         self.imdb_max = 10
+    def setSimilarity(self, score):
+        self.similarity = score

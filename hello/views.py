@@ -3,6 +3,7 @@ from django.shortcuts import render
 #from django.http import HttpResponse
 import hello.moviesdb as moviesdb
 from hello.search import Search
+from hello.recommend import Recommend
 
 
 # Create your views here.
@@ -27,6 +28,11 @@ def search_movies(request):
         search = Search(title, genre, director, actor, rating_source, rating_value, released, grossed, plot)
         return render(request, 'index.html', {'movies': search.getMovieQuery()})
 
+def generate_recommendation(request):
+    if request.method == "GET":
+        movie_id = request.GET.get('movie', None)
+        recommended = Recommend(movie_id)
+        return render(request, 'recommended.html', {'recommended': recommended.getRecommended()})
 
 def db(request):
     """return all movies"""

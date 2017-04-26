@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body text-center">
+      <h3>Here are 10 movies we think you'd enjoy</h3>
+    </div>
+  </div>
+  {% for movie in recommended %}
+    {% if not forloop.first %}
+      <div class="panel panel-default">
+        <div class="panel-heading">{{ movie.title }} ({{ movie.date_released.year }}) Similarity: {{ movie.similarity}}%</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <img src={{movie.poster_path}}/>
+            </div>
+            <div class="col-md-4">
+              <b>Plot:</b> {{ movie.plot }}
+              <br />
+              <br />
+              <b>Genre:</b> {{ movie.genre}}
+              <br />
+              <br />
+              <b>Grossed:</b> ${{movie.grossed}} million (US)
+              <br />
+              <br />
+              <b>Actors:</b>
+              {% for actor in movie.zipped_actors %}
+                <a href={{ actor.1 }} target="_blank">{{ actor.0 }}{{ forloop.last|yesno:",&#44;"|safe }}</a>
+              {% endfor %}
+              <br />
+              <br />
+              <b>Director:</b>
+              <a href={{ movie.director_link }} target="_blank">{{ movie.director_name }}</a>
+            </div>
+            <div class="col-md-4 text-center">
+              <h2>Ratings</h2>
+              <button class="btn btn-primary" type="button">
+                Our Rating <span class="badge">{{ movie.custom_score }}</span>
+              </button>
+              <br />
+              <br />
+              <b>IMDb</b>
+              <div class="progress text-center">
+                <div class="progress-bar progress-bar-warning  progress-bar-striped" style={{ movie.imdb_rating_text }}>
+                  <span>
+                    {{ movie.imdb_rating }}
+                  </span>
+                </div>
+              </div>
+              <br />
+              <br />
+              <b>Rotten Tomatoes</b>
+              <div class="progress text-center">
+                <div class="progress-bar progress-bar-danger progress-bar-striped" style={{ movie.rotten_rating_text }}>
+                  <span>
+                    {{ movie.rotten_rating }}
+                  </span>
+                </div>
+              </div>
+              <br />
+              <br />
+              <b>Metascore</b>
+              <div class="progress text-center">
+                <div class="progress-bar progress-bar-success progress-bar-striped" style={{ movie.metascore_text }}>
+                  <span>
+                    {{ movie.metascore }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>
+
+
+{% endblock %}

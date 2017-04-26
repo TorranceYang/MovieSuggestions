@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,6 +136,16 @@
 </head>
 <body>
 <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="{% static 'popcorn.png'%}">
+    </a>
+    <h1>Find the Movie You've Been Looking For</h1>
+    <p>Overwhelmed by all of the options out there? We've placed all the information about IMDb's Top 250 movies all in one place so that you can make the decision quicker!</p>
+    <!--<a type="button" class="btn btn-lg btn-default" href="https://github.com/yuminz/316Spring2017"><span class="fa fa-github"></span> View Source</a>-->
+  </div>
+</div>
 {% block content %}{% endblock %}
 
 </body>

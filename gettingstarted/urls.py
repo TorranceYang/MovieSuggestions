@@ -11,6 +11,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^search/$', hello.views.search_movies, name='search'),
+    url(r'^recommend/$', hello.views.generate_recommendation, name='recommend'),
     url(r'^$', hello.views.db, name='index'),
     url(r'^db', hello.views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),
