@@ -17,12 +17,16 @@ def search_movies(request):
     if request.method == "GET":
         title = request.GET.get('searchTitle', None)
         genre = request.GET.get('searchGenre', None)
-        director  = request.GET.get('searchDirector', None)
-        rating = request.GET.get('searchRating', None)
+        director = request.GET.get('searchDirector', None)
+        actor = request.GET.get('searchActor', None)
+        rating_source = request.GET.get('searchRatingSource', None)
+        rating_value = request.GET.get('searchRatingValue', None)
+        released = request.GET.get('searchReleased', None)
+        grossed = request.GET.get('searchGrossed', None)
+        plot = request.GET.get('searchPlot', None)
 
-        search_type = Search(title)
-        movies = search_type.getSearchResults()
-        return render(request, 'index.html', {'movies': movies})
+        search = Search(title, genre, director, actor, rating_source, rating_value, released, grossed, plot)
+        return render(request, 'index.html', {'movies': search.getMovieQuery()})
 
 
 def db(request):

@@ -13,104 +13,148 @@
     <!--<a type="button" class="btn btn-lg btn-default" href="https://github.com/yuminz/316Spring2017"><span class="fa fa-github"></span> View Source</a>-->
   </div>
 </div>
-<div class="container">
-    {{test }}
-  <div class="panel-group">
+<div class="container ">
+  <div class="panel panel-primary text-center " style="max-width:700px;margin-left:auto; margin-right:auto;">
+    <div class="panel-body ">
+      <h3>Filter Results</h3>
       <form action="/search/" method="get" style="margin-bottom: 50px">
-          <div style="text-align: center">
-            <span>Title</span>
-            <input type="text" name="searchTitle" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
-            <input type="submit" name="enter" value="Submit" />
-          </div>
-      </form>
-      <form action="/search/" method="get" style="margin-bottom: 50px">
-          <div style="text-align: center">
-            <span>Genre</span>
-            <input type="text" name="searchGenre" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
-            <input type="submit" name="enter" value="Submit" />
-          </div>
-      </form>
-      <form action="/search/" method="get" style="margin-bottom: 50px">
-          <div style="text-align: center">
-            <span>Director</span>
-            <input type="text" name="searchDirector" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
-            <input type="submit" name="enter" value="Submit" />
-          </div>
-      </form>
-      <form action="/search/" method="get" style="margin-bottom: 50px">
-          <div style="text-align: center">
-            <span>Rating</span>
-            <input type="text" name="searchRating" placeholder="Enter a search" style="padding-left:4px;width:50%"/>
-            <input type="submit" name="enter" value="Submit" />
-          </div>
-      </form>
-    {% for movie in movies %}
-    <div class="panel panel-default">
-      <div class="panel-heading">{{ movie.title }} ({{ movie.date_released.year }})</div>
-      <div class="panel-body">
         <div class="row">
           <div class="col-md-4">
-            <img src={{movie.poster_path}}/>
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input type="text" class="form-control" name="searchTitle" id="title" placeholder="Title Contains" />
+            </div>
           </div>
           <div class="col-md-4">
-            <b>Plot:</b> {{ movie.plot }}
-            <br />
-            <br />
-            <b>Genre:</b> {{ movie.genre}}
-            <br />
-            <br />
-            <b>Grossed:</b> ${{movie.grossed}} million (US)
-            <br />
-            <br />
-            <b>Actors:</b>
-            {% for actor in movie.zipped_actors %}
-              <a href={{ actor.1 }} target="_blank">{{ actor.0 }}{{ forloop.last|yesno:",&#44;"|safe }}</a>
-            {% endfor %}
-            <br />
-            <br />
-            <b>Director:</b>
-            <a href={{ movie.director_link }} target="_blank">{{ movie.director_name }}</a>
+            <div class="form-group">
+              <label for="genre">Genre:</label>
+              <input type="text" class="form-control" name="searchGenre" id="genre" placeholder="Genre" />
+            </div>
           </div>
-          <div class="col-md-4 text-center">
-            <h2>Ratings</h2>
-            <button class="btn btn-primary" type="button">
-              Our Rating <span class="badge">{{ movie.custom_score }}</span>
-            </button>
-            <br />
-            <br />
-            <b>IMDb</b>
-            <div class="progress text-center">
-              <div class="progress-bar progress-bar-warning  progress-bar-striped" style={{ movie.imdb_rating_text }}>
-                <span>
-                  {{ movie.imdb_rating }}
-                </span>
-              </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="director">Director:</label>
+              <input type="text" class="form-control" name="searchDirector" id="director" placeholder="Director" />
             </div>
-            <br />
-            <br />
-            <b>Rotten Tomatoes</b>
-            <div class="progress text-center">
-              <div class="progress-bar progress-bar-danger progress-bar-striped" style={{ movie.rotten_rating_text }}>
-                <span>
-                  {{ movie.rotten_rating }}
-                </span>
-              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="actor">Actor:</label>
+              <input type="text" class="form-control" name="searchActor" id="actor" placeholder="Actor" />
             </div>
-            <br />
-            <br />
-            <b>Metascore</b>
-            <div class="progress text-center">
-              <div class="progress-bar progress-bar-success progress-bar-striped" style={{ movie.metascore_text }}>
-                <span>
-                  {{ movie.metascore }}
-                </span>
-              </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="rating-source">Rating Source:</label>
+              <select class="form-control" name="searchRatingSource" id="rating-source">
+                <option value="imdb">IMDb</option>
+                <option value="rotten tomatoes">Rotten Tomatoes</option>
+                <option value="metascore">Metascore</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="rating-value">Min Rating:</label>
+              <input type="text" class="form-control" name="searchRatingValue" id="rating-value" placeholder="Min Rating" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="released">Released After:</label>
+              <input type="text" class="form-control" name="searchReleased" id="released" placeholder="Enter year" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="grossed">Grossed:</label>
+              <input type="text" class="form-control" name="searchGrossed" id="grossed" placeholder="Enter dollar amount (millions)" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="plot">Plot:</label>
+              <input type="text" class="form-control" name="searchPlot" id="plot" placeholder="Enter plot keywords" />
+            </div>
+          </div>
+        </div>
+        <input type="submit" name="enter" value="Submit" class="btn btn-primary"/>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container">
+  {% for movie in movies %}
+  <div class="panel panel-default">
+    <div class="panel-heading">{{ movie.title }} ({{ movie.date_released.year }})</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-4">
+          <img src={{movie.poster_path}}/>
+        </div>
+        <div class="col-md-4">
+          <b>Plot:</b> {{ movie.plot }}
+          <br />
+          <br />
+          <b>Genre:</b> {{ movie.genre}}
+          <br />
+          <br />
+          <b>Grossed:</b> ${{movie.grossed}} million (US)
+          <br />
+          <br />
+          <b>Actors:</b>
+          {% for actor in movie.zipped_actors %}
+            <a href={{ actor.1 }} target="_blank">{{ actor.0 }}{{ forloop.last|yesno:",&#44;"|safe }}</a>
+          {% endfor %}
+          <br />
+          <br />
+          <b>Director:</b>
+          <a href={{ movie.director_link }} target="_blank">{{ movie.director_name }}</a>
+        </div>
+        <div class="col-md-4 text-center">
+          <h2>Ratings</h2>
+          <button class="btn btn-primary" type="button">
+            Our Rating <span class="badge">{{ movie.custom_score }}</span>
+          </button>
+          <br />
+          <br />
+          <b>IMDb</b>
+          <div class="progress text-center">
+            <div class="progress-bar progress-bar-warning  progress-bar-striped" style={{ movie.imdb_rating_text }}>
+              <span>
+                {{ movie.imdb_rating }}
+              </span>
+            </div>
+          </div>
+          <br />
+          <br />
+          <b>Rotten Tomatoes</b>
+          <div class="progress text-center">
+            <div class="progress-bar progress-bar-danger progress-bar-striped" style={{ movie.rotten_rating_text }}>
+              <span>
+                {{ movie.rotten_rating }}
+              </span>
+            </div>
+          </div>
+          <br />
+          <br />
+          <b>Metascore</b>
+          <div class="progress text-center">
+            <div class="progress-bar progress-bar-success progress-bar-striped" style={{ movie.metascore_text }}>
+              <span>
+                {{ movie.metascore }}
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    {% endfor %}
+  </div>
+  {% endfor %}
   </div>
 </div>
 
