@@ -26,7 +26,8 @@ def search_movies(request):
         plot = request.GET.get('searchPlot', None)
 
         search = Search(title, genre, director, actor, rating_source, rating_value, released, grossed, plot)
-        return render(request, 'index.html', {'movies': search.getMovieQuery()})
+        search.getMovieQuery().sortByCustomRating()
+        return render(request, 'index.html', {'movies': search.getMovieList()})
 
 def generate_recommendation(request):
     if request.method == "GET":
@@ -36,7 +37,7 @@ def generate_recommendation(request):
 
 def db(request):
     """return all movies"""
-    movies = moviesdb.getAllMovies()
+    movies = moviesdb.sortByCustomRating(moviesdb.getAllMovies())
     # greeting = Greeting()
     # greeting.save()
 

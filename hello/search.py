@@ -20,7 +20,8 @@ class Search(object):
 
     def __init__(self, title, genre, director, actor, rating_source, rating_value, released, grossed, plot):
         self.conn = self.connect()
-
+        self.movie_list = []
+        
         #There should be a better way to do this, but this will work for the time being
         if title is not None:
             self.title = title.lower()
@@ -67,6 +68,7 @@ class Search(object):
         else:
             self.plot = ""
 
+
     def getMovieQuery(self):
         """a common query with a few changes"""
 
@@ -91,7 +93,6 @@ class Search(object):
 
         cursor.execute(commonQuery + searchParamters + groupingQuery, (self.released, self.grossed))
         all_rows = cursor.fetchall()
-        movies = []
         for row in all_rows:
             #Not an easy way to do this in SQL so I wrote it in python
             all_rating_sources = row[12].split(",")
@@ -99,5 +100,14 @@ class Search(object):
             all_ratings = row[11].split(",")
 
             if self.rating_source in all_rating_sources and float(all_ratings[all_rating_sources.index(self.rating_source)]) >= float(self.rating_value):
-                movies.append(Movie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12]))
-        return movies
+                self.movie_list.append(Movie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12]))
+
+        return self
+
+    def getMovieList(self):
+        """getter for movie_list"""
+        return self.movie_list
+    
+    def sortByCustomRating(self):
+        """sorting movies"""
+        self.movie_list.sort(key=lambda x:x.custom_score, reverse=True)

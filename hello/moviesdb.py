@@ -15,6 +15,10 @@ conn = psycopg2.connect(
     port=url.port
 )
 
+def sortByCustomRating(movies):
+    """sorting movies"""
+    return sorted(movies, key=lambda x: x.custom_score, reverse=True)
+
 def getAllMovies():
     """return all movies"""
     cursor = conn.cursor()
@@ -90,5 +94,11 @@ class Movie:
         self.rotten_max = 100
         self.metascore_max = 100
         self.imdb_max = 10
+
+    def getCustomRating(self):
+        """getter for custom rating"""
+        return self.custom_score
+
     def setSimilarity(self, score):
         self.similarity = score
+
