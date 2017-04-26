@@ -2,6 +2,8 @@ import os
 import psycopg2
 import urlparse
 import datetime
+from decimal import Decimal
+from math import trunc
 
 urlparse.uses_netloc.append("postgres")
 url = urlparse.urlparse(os.environ["DATABASE_URL"])
@@ -54,27 +56,35 @@ class Movie:
 
         ratings_array = ratings.split(",")
         sources_array = sources.split(",")
-
+        
+        score = 0
+        num_results = 0
         try:
             self.rotten_rating = ratings_array[sources_array.index("Rotten Tomatoes")]
             self.rotten_rating_text = "width:" + str(self.rotten_rating) + "%"
+            score += int(self.rotten_rating)
+            num_results += 1
         except:
             self.rotten_rating = "N/A"
         try:
             self.metascore = ratings_array[sources_array.index("Metascore")]
             self.metascore_text = "width:" + str(self.metascore) + "%"
+            score += int(self.metascore)
+            num_results += 1
         except:
             self.metascore = "N/A"
 
         try:
             self.imdb_rating = ratings_array[sources_array.index("IMDb")]
             self.imdb_rating_text = "width:" + str(int(float(self.imdb_rating) * 10)) + "%"
+            score += trunc(Decimal(self.imdb_rating) * 10 * 100)/100
+            num_results += 1
         except:
 
             self.imdb_rating = "N/A"
 
         #Filler
-        self.custom_score = 90
+        self.custom_score = score/num_results if num_results is not 0 else "N/A"
 
         self.rotten_max = 100
         self.metascore_max = 100
