@@ -1,0 +1,14 @@
+Team 17 Movie Recommendation
+
+Torrance Yang
+Torrance set up the framework for the project. He started up the database and linked it with heroku. He also choose Django to be the framework. He worked on scraping the data from all those movie sites.
+
+Bill Xiong
+Bill worked on getting the searching quieries wroking. He did the movie recommendation and user defined advanced searching. 
+
+
+Timmy Huang
+Timmy worked on the front end UI. He set up the multiple pages views and did those html, css for the front end.
+
+Yumin Zhang
+Yumin worked on the creating user account information and generating account related recommendations based on user likes. 
