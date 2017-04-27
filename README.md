@@ -41,6 +41,9 @@ or
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+## To Whoever is Grading This
+If you'd like to better understand our data structure and usage, please ask us for the database connection url and you can take a look for yourself!
+
 ## Documentation
 
 For more information about using Python on Heroku, see these Dev Center articles:
